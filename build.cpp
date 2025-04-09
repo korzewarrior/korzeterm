@@ -16,8 +16,8 @@ int main() {
         return 1;
     }
     
-    // Build the terminal emulator
-    const char* cmd = "g++ -std=c++11 -o korzeterm main.cpp $(pkg-config --cflags --libs Qt5Widgets Qt5Core Qt5Gui) -Wall -Wextra";
+    // Build the terminal emulator with PTY support
+    const char* cmd = "/usr/bin/g++ -std=c++11 -o korzeterm main.cpp $(pkg-config --cflags --libs Qt5Widgets Qt5Core Qt5Gui) -lutil -Wall -Wextra";
     printf("Running: %s\n", cmd);
     
     int result = system(cmd);
@@ -32,6 +32,7 @@ int main() {
         printf("  - base-devel (for g++ and build tools)\n");
         printf("  - qt5-base (for Qt libraries)\n");
         printf("  - qt5-tools (for moc compiler)\n");
+        printf("  - glibc (for PTY support)\n");
     }
     
     return result;

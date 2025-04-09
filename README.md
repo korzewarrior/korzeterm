@@ -1,34 +1,61 @@
 # KorzeTerm
 
-An ultra-minimal GUI terminal emulator for Arch Linux.
+A minimal, blazingly fast terminal emulator written in C++ with Qt5.
 
 ## Features
 
-- Ridiculously minimal and streamlined
-- Modern minimal UI
-- Connects to your default shell
-- Gruvbox-inspired dark theme
+- Fast, responsive terminal emulation
+- Real PTY (pseudo-terminal) support
+- Proper handling of terminal control sequences
+- Monospace font support
+- Clean, minimal interface
 
-## Dependencies
+## Requirements
 
-You'll need Qt5 development libraries:
-
-```bash
-sudo pacman -S qt5-base
-```
+- Qt5 (qt5-base, qt5-tools)
+- C++11 compiler (g++)
+- libutil/libutil (part of glibc)
 
 ## Building
 
 ```bash
-make
+# Compile the build script
+g++ build.cpp -o build
+
+# Run the build script to compile and start KorzeTerm
+./build
 ```
 
-## Running
+## Direct Compilation
+
+If you prefer to compile directly:
+
+```bash
+# Generate the Meta-Object file
+moc main.cpp -o main.moc
+
+# Compile KorzeTerm
+g++ -std=c++11 -o korzeterm main.cpp $(pkg-config --cflags --libs Qt5Widgets Qt5Core Qt5Gui) -lutil -Wall -Wextra
+```
+
+## Usage
+
+Once compiled, run KorzeTerm:
 
 ```bash
 ./korzeterm
 ```
 
-## Usage
+## Implementation Details
 
-Just type and interact as you would with any terminal emulator. The app launches your default shell. 
+KorzeTerm uses a proper PTY implementation with the following features:
+
+1. Full terminal emulation with proper escape sequence handling
+2. Direct PTY access using forkpty() for true terminal integration
+3. Proper window resizing notifications to child processes
+4. Efficient text rendering with Qt's QPainter
+5. Minimal memory footprint
+
+## License
+
+MIT 
